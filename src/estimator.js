@@ -15,9 +15,21 @@ const covid19ImpactEstimator = () => {
   const impact = () => {
     const { reportedCases } = inputData;
     const currentlyInfected = reportedCases * 10;
-    let duration;
-    const threeDayPeriod = Math.trunc(duration / 3);
-    const infectionsByRequestedTime = currentlyInfected * (2 ** threeDayPeriod);
+    const duration = () => {
+      let numberOfThreeDayPeriods;
+      let durationInDays;
+      let durationInWeeks;
+      let durationInMonths;
+      if (durationInDays) {
+        numberOfThreeDayPeriods = Math.trunc(durationInDays / 3);
+      } else if (durationInWeeks) {
+        numberOfThreeDayPeriods = Math.trunc((durationInWeeks * 7) / 3);
+      } else {
+        numberOfThreeDayPeriods = Math.trunc((durationInMonths * 30) / 3);
+      }
+      return numberOfThreeDayPeriods;
+    };
+    const infectionsByRequestedTime = currentlyInfected * (2 ** duration);
     const severeCasesByRequestedTime = Math.trunc((15 / 100) * infectionsByRequestedTime);
     const { totalHospitalBeds } = inputData;
     const availableBeds = Math.trunc((35 / 100) * totalHospitalBeds);
@@ -41,9 +53,21 @@ const covid19ImpactEstimator = () => {
   const severeImpact = () => {
     const { reportedCases } = inputData;
     const currentlyInfected = reportedCases * 50;
-    let duration;
-    const threeDayPeriod = Math.trunc(duration / 3);
-    const infectionsByRequestedTime = currentlyInfected * (2 ** threeDayPeriod);
+    const duration = () => {
+      let numberOfThreeDayPeriods;
+      let durationInDays;
+      let durationInWeeks;
+      let durationInMonths;
+      if (durationInDays) {
+        numberOfThreeDayPeriods = Math.trunc(durationInDays / 3);
+      } else if (durationInWeeks) {
+        numberOfThreeDayPeriods = Math.trunc((durationInWeeks * 7) / 3);
+      } else {
+        numberOfThreeDayPeriods = Math.trunc((durationInMonths * 30) / 3);
+      }
+      return numberOfThreeDayPeriods;
+    };
+    const infectionsByRequestedTime = currentlyInfected * (2 ** duration);
     const severeCasesByRequestedTime = Math.trunc((15 / 100) * infectionsByRequestedTime);
     const { totalHospitalBeds } = inputData;
     const availableBeds = Math.trunc((35 / 100) * totalHospitalBeds);

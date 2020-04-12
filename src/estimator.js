@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const data = {
   region: {
     name: 'Africa',
@@ -35,15 +36,6 @@ const impact = () => {
   const expectedAmount = data.region.avgDailyIncomePopulation * data.region.avgDailyIncomeInUSD;
   const loss = infectionsByRequestedTime * expectedAmount;
   const dollarsInFlight = Math.trunc(loss / days);
-  return {
-    currentlyInfected,
-    infectionsByRequestedTime
-    /*    severeCasesByRequestedTime,
-    hospitalBedsByRequestedTime,
-    casesForICUByRequestedTime,
-    casesForVentilatorsByRequestedTime,
-    dollarsInFlight */
-  };
 };
 const severeImpact = () => {
   const currentlyInfected = data.reportedCases * 50;
@@ -58,15 +50,6 @@ const severeImpact = () => {
   const expectedAmount = data.region.avgDailyIncomePopulation * data.region.avgDailyIncomeInUSD;
   const loss = infectionsByRequestedTime * expectedAmount;
   const dollarsInFlight = Math.trunc(loss / days);
-  return {
-    currentlyInfected,
-    infectionsByRequestedTime
-    /* severeCasesByRequestedTime,
-    hospitalBedsByRequestedTime,
-    casesForICUByRequestedTime,
-    casesForVentilatorsByRequestedTime,
-    dollarsInFlight */
-  };
 };
 const impactEstimation = impact();
 const severeImpactEstimation = severeImpact();

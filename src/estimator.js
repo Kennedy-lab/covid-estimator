@@ -37,12 +37,12 @@ const impact = () => {
   const dollarsInFlight = Math.trunc(loss / days);
   return {
     currentlyInfected,
-    infectionsByRequestedTime,
-    severeCasesByRequestedTime,
+    infectionsByRequestedTime
+    /*    severeCasesByRequestedTime,
     hospitalBedsByRequestedTime,
     casesForICUByRequestedTime,
     casesForVentilatorsByRequestedTime,
-    dollarsInFlight
+    dollarsInFlight */
   };
 };
 const severeImpact = () => {
@@ -60,12 +60,12 @@ const severeImpact = () => {
   const dollarsInFlight = Math.trunc(loss / days);
   return {
     currentlyInfected,
-    infectionsByRequestedTime,
-    severeCasesByRequestedTime,
+    infectionsByRequestedTime
+    /* severeCasesByRequestedTime,
     hospitalBedsByRequestedTime,
     casesForICUByRequestedTime,
     casesForVentilatorsByRequestedTime,
-    dollarsInFlight
+    dollarsInFlight */
   };
 };
 const impactEstimation = impact();

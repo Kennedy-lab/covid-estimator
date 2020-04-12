@@ -23,7 +23,7 @@ const duration = () => {
   }
   return numberOfThreeDayPeriods;
 };
-const impact = () => {
+const impactEstimation = () => {
   const currentlyInfected = data.reportedCases * 10;
   const days = duration();
   const factor = 2 ** days;
@@ -46,7 +46,7 @@ const impact = () => {
     dollarsInFlight
   };
 };
-const severeImpact = () => {
+const severeImpactEstimation = () => {
   const currentlyInfected = data.reportedCases * 50;
   const days = duration();
   const factor = 2 ** days;
@@ -69,11 +69,11 @@ const severeImpact = () => {
     dollarsInFlight
   };
 };
-const impactEstimation = impact();
-const severeImpactEstimation = severeImpact();
+const impact = impactEstimation();
+const severeImpact = severeImpactEstimation();
 const covid19ImpactEstimator = () => ({
   data,
-  impactEstimation,
-  severeImpactEstimation
+  impact,
+  severeImpact
 });
 export default covid19ImpactEstimator;

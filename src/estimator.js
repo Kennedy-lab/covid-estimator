@@ -1,4 +1,4 @@
-const inputData = {
+const data = {
   region: {
     name: 'Africa',
     avgAge: 19.7,
@@ -11,85 +11,69 @@ const inputData = {
   population: 66622705,
   totalHospitalBeds: 1380614
 };
-const covid19ImpactEstimator = () => {
-  const impact = () => {
-    const { reportedCases } = inputData;
-    const currentlyInfected = reportedCases * 10;
-    const duration = () => {
-      const { timeToElapse } = inputData;
-      const { periodType } = inputData;
-      let numberOfThreeDayPeriods;
-      if (periodType === 'days') {
-        numberOfThreeDayPeriods = Math.trunc(timeToElapse / 3);
-      } else if (periodType === 'weeks') {
-        numberOfThreeDayPeriods = Math.trunc((timeToElapse * 7) / 3);
-      } else if (periodType === 'months') {
-        numberOfThreeDayPeriods = Math.trunc((timeToElapse * 30) / 3);
-      }
-      return numberOfThreeDayPeriods;
-    };
-    const infectionsByRequestedTime = currentlyInfected * (2 ** duration);
-    const severeCasesByRequestedTime = Math.trunc((15 / 100) * infectionsByRequestedTime);
-    const { totalHospitalBeds } = inputData;
-    const availableBeds = Math.trunc((35 / 100) * totalHospitalBeds);
-    const hospitalBedsByRequestedTime = availableBeds - severeCasesByRequestedTime;
-    const casesForICUByRequestedTime = Math.trunc((5 / 100) * infectionsByRequestedTime);
-    const casesForVentilatorsByRequestedTime = (2 / 100) * infectionsByRequestedTime;
-    const { avgDailyIncomePopulation } = inputData;
-    const { avgDailyIncomeInUSD } = inputData;
-    const loss = infectionsByRequestedTime * avgDailyIncomePopulation * avgDailyIncomeInUSD;
-    const dollarsInFlight = Math.trunc(loss / duration);
-    return {
-      currentlyInfected,
-      infectionsByRequestedTime,
-      severeCasesByRequestedTime,
-      hospitalBedsByRequestedTime,
-      casesForICUByRequestedTime,
-      casesForVentilatorsByRequestedTime,
-      dollarsInFlight
-    };
-  };
-  const severeImpact = () => {
-    const { reportedCases } = inputData;
-    const currentlyInfected = reportedCases * 50;
-    const duration = () => {
-      const { timeToElapse } = inputData;
-      const { periodType } = inputData;
-      let numberOfThreeDayPeriods;
-      if (periodType === 'days') {
-        numberOfThreeDayPeriods = Math.trunc(timeToElapse / 3);
-      } else if (periodType === 'weeks') {
-        numberOfThreeDayPeriods = Math.trunc((timeToElapse * 7) / 3);
-      } else if (periodType === 'months') {
-        numberOfThreeDayPeriods = Math.trunc((timeToElapse * 30) / 3);
-      }
-      return numberOfThreeDayPeriods;
-    };
-    const infectionsByRequestedTime = currentlyInfected * (2 ** duration);
-    const severeCasesByRequestedTime = Math.trunc((15 / 100) * infectionsByRequestedTime);
-    const { totalHospitalBeds } = inputData;
-    const availableBeds = Math.trunc((35 / 100) * totalHospitalBeds);
-    const hospitalBedsByRequestedTime = availableBeds - severeCasesByRequestedTime;
-    const casesForICUByRequestedTime = Math.trunc((5 / 100) * infectionsByRequestedTime);
-    const casesForVentilatorsByRequestedTime = Math.trunc((2 / 100) * infectionsByRequestedTime);
-    const { avgDailyIncomePopulation } = inputData;
-    const { avgDailyIncomeInUSD } = inputData;
-    const loss = infectionsByRequestedTime * avgDailyIncomePopulation * avgDailyIncomeInUSD;
-    const dollarsInFlight = Math.trunc(loss / duration);
-    return {
-      currentlyInfected,
-      infectionsByRequestedTime,
-      severeCasesByRequestedTime,
-      hospitalBedsByRequestedTime,
-      casesForICUByRequestedTime,
-      casesForVentilatorsByRequestedTime,
-      dollarsInFlight
-    };
-  };
-  return ({
-    inputData,
-    impact,
-    severeImpact
-  });
+const duration = () => {
+  let numberOfThreeDayPeriods;
+  if (data.periodType === 'days') {
+    numberOfThreeDayPeriods = Math.trunc(data.timeToElapse / 3);
+  } else if (data.periodType === 'weeks') {
+    numberOfThreeDayPeriods = Math.trunc((data.timeToElapse * 7) / 3);
+  } else if (data.periodType === 'months') {
+    numberOfThreeDayPeriods = Math.trunc((data.timeToElapse * 30) / 3);
+  }
+  return numberOfThreeDayPeriods;
 };
+const impact = () => {
+  const currentlyInfected = data.reportedCases * 10;
+  const days = duration();
+  const factor = 2 ** days;
+  const infectionsByRequestedTime = currentlyInfected * factor;
+  const severeCasesByRequestedTime = Math.trunc((15 / 100) * infectionsByRequestedTime);
+  const availableBeds = Math.trunc((35 / 100) * data.totalHospitalBeds);
+  const hospitalBedsByRequestedTime = availableBeds - severeCasesByRequestedTime;
+  const casesForICUByRequestedTime = Math.trunc((5 / 100) * infectionsByRequestedTime);
+  const casesForVentilatorsByRequestedTime = (2 / 100) * infectionsByRequestedTime;
+  const expectedAmount = data.region.avgDailyIncomePopulation * data.region.avgDailyIncomeInUSD;
+  const loss = infectionsByRequestedTime * expectedAmount;
+  const dollarsInFlight = Math.trunc(loss / days);
+  return {
+    currentlyInfected,
+    infectionsByRequestedTime,
+    severeCasesByRequestedTime,
+    hospitalBedsByRequestedTime,
+    casesForICUByRequestedTime,
+    casesForVentilatorsByRequestedTime,
+    dollarsInFlight
+  };
+};
+const severeImpact = () => {
+  const currentlyInfected = data.reportedCases * 50;
+  const days = duration();
+  const factor = 2 ** days;
+  const infectionsByRequestedTime = currentlyInfected * factor;
+  const severeCasesByRequestedTime = Math.trunc((15 / 100) * infectionsByRequestedTime);
+  const availableBeds = Math.trunc((35 / 100) * data.totalHospitalBeds);
+  const hospitalBedsByRequestedTime = availableBeds - severeCasesByRequestedTime;
+  const casesForICUByRequestedTime = Math.trunc((5 / 100) * infectionsByRequestedTime);
+  const casesForVentilatorsByRequestedTime = Math.trunc((2 / 100) * infectionsByRequestedTime);
+  const expectedAmount = data.region.avgDailyIncomePopulation * data.region.avgDailyIncomeInUSD;
+  const loss = infectionsByRequestedTime * expectedAmount;
+  const dollarsInFlight = Math.trunc(loss / days);
+  return {
+    currentlyInfected,
+    infectionsByRequestedTime,
+    severeCasesByRequestedTime,
+    hospitalBedsByRequestedTime,
+    casesForICUByRequestedTime,
+    casesForVentilatorsByRequestedTime,
+    dollarsInFlight
+  };
+};
+const impactEstimation = impact();
+const severeImpactEstimation = severeImpact();
+const covid19ImpactEstimator = () => ({
+  data,
+  impactEstimation,
+  severeImpactEstimation
+});
+covid19ImpactEstimator();
 export default covid19ImpactEstimator;

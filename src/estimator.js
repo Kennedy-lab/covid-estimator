@@ -16,16 +16,15 @@ const covid19ImpactEstimator = () => {
     const { reportedCases } = inputData;
     const currentlyInfected = reportedCases * 10;
     const duration = () => {
+      const { timeToElapse } = inputData;
+      const { periodType } = inputData;
       let numberOfThreeDayPeriods;
-      let durationInDays;
-      let durationInWeeks;
-      let durationInMonths;
-      if (durationInDays) {
-        numberOfThreeDayPeriods = Math.trunc(durationInDays / 3);
-      } else if (durationInWeeks) {
-        numberOfThreeDayPeriods = Math.trunc((durationInWeeks * 7) / 3);
-      } else {
-        numberOfThreeDayPeriods = Math.trunc((durationInMonths * 30) / 3);
+      if (periodType === 'days') {
+        numberOfThreeDayPeriods = Math.trunc(timeToElapse / 3);
+      } else if (periodType === 'weeks') {
+        numberOfThreeDayPeriods = Math.trunc((timeToElapse * 7) / 3);
+      } else if (periodType === 'months') {
+        numberOfThreeDayPeriods = Math.trunc((timeToElapse * 30) / 3);
       }
       return numberOfThreeDayPeriods;
     };
@@ -54,16 +53,15 @@ const covid19ImpactEstimator = () => {
     const { reportedCases } = inputData;
     const currentlyInfected = reportedCases * 50;
     const duration = () => {
+      const { timeToElapse } = inputData;
+      const { periodType } = inputData;
       let numberOfThreeDayPeriods;
-      let durationInDays;
-      let durationInWeeks;
-      let durationInMonths;
-      if (durationInDays) {
-        numberOfThreeDayPeriods = Math.trunc(durationInDays / 3);
-      } else if (durationInWeeks) {
-        numberOfThreeDayPeriods = Math.trunc((durationInWeeks * 7) / 3);
-      } else {
-        numberOfThreeDayPeriods = Math.trunc((durationInMonths * 30) / 3);
+      if (periodType === 'days') {
+        numberOfThreeDayPeriods = Math.trunc(timeToElapse / 3);
+      } else if (periodType === 'weeks') {
+        numberOfThreeDayPeriods = Math.trunc((timeToElapse * 7) / 3);
+      } else if (periodType === 'months') {
+        numberOfThreeDayPeriods = Math.trunc((timeToElapse * 30) / 3);
       }
       return numberOfThreeDayPeriods;
     };

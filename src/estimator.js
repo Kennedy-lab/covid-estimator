@@ -2,11 +2,11 @@ const covid19ImpactEstimator = (data) => {
   const duration = () => {
     let numberOfThreeDayPeriods;
     if (data.periodType === 'days') {
-      numberOfThreeDayPeriods = (data.timeToElapse / 3);
+      numberOfThreeDayPeriods = Math.trunc(data.timeToElapse / 3);
     } else if (data.periodType === 'weeks') {
-      numberOfThreeDayPeriods = ((data.timeToElapse * 7) / 3);
+      numberOfThreeDayPeriods = Math.trunc((data.timeToElapse * 7) / 3);
     } else if (data.periodType === 'months') {
-      numberOfThreeDayPeriods = ((data.timeToElapse * 30) / 3);
+      numberOfThreeDayPeriods = Math.trunc((data.timeToElapse * 30) / 3);
     }
     return numberOfThreeDayPeriods;
   };

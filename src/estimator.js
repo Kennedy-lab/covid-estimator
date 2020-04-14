@@ -45,7 +45,7 @@ const covid19ImpactEstimator = (data) => {
     const casesForVentilatorsByRequestedTime = Math.trunc((2 / 100) * infectionsByRequestedTime);
     const expectedAmount = data.region.avgDailyIncomePopulation * data.region.avgDailyIncomeInUSD;
     const loss = infectionsByRequestedTime * expectedAmount;
-    const dollarsInFlight = Math.trunc(loss / data.timeToElapse);
+    const dollarsInFlight = Math.trunc(loss * data.timeToElapse);
     return {
       currentlyInfected,
       infectionsByRequestedTime,
